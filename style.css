@@ -1,0 +1,53 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    flex-direction: column;
+}
+
+/* Header Styling */
+header {
+    margin-bottom: 20px;
+}
+
+#hotel-name {
+    font-size: 2em;
+    color: #333;
+    text-align: center;
+}
+
+/* Inventory List */
+#inventory {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+#inventory h2 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+#product-list {
+    list-style: none;
+    text-align: center;
+}
+
+#product-list li {
+    padding: 8px;
+    font-size: 1.1em;
+    color: #555;
+}

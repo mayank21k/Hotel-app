@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Web Page</title>
+    <style>
+        /* Style the navigation bar */
+        nav {
+            background-color: #333;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        nav a:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="login.html">Login</a>
+        <a href="dashboard.html">Dashboard</a>
+    </nav>
+
+    <!-- Content of the Page -->
+    <div id="content">
+        <h1>Welcome to My Web Page</h1>
+        <p>This is where the main content of each page will go.</p>
+    </div>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scanner Simulation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+</head>
+<body>
+    <div id="dashboard">
+        <button id="scan_button">Scan Item</button>
+        <div id="item_details" style="display:none;">
+            <h2>Item Details</h2>
+            <p>Item: <span id="item_name"></span></p>
+            <p>Weight: <span id="item_weight"></span></p>
+            <p>Price: ₹<span id="item_price"></span></p>
+        </div>
+        <div id="payment_options" style="display:none;">
+            <h3>Select Payment Method</h3>
+            <button id="pay_cash">Cash</button>
+            <button id="pay_gpay">GPay</button>
+            <div id="cash_payment" style="display:none;">
+                <label>Enter Amount:</label>
+                <input type="number" id="cash_amount" placeholder="Enter Cash Amount">
+                <button id="confirm_cash">Confirm Payment</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+    <script>
+        // Mock product data
+        const productData = {
+            "Kaju Katli": { weight: "1kg", price: 700 },
+            "Farsan": { weight: "1kg", price: 300 }
+        };
+
+        $('#scan_button').click(function() {
+            // Simulate scanning - select a random product
+            const items = Object.keys(productData);
+            const randomItem = items[Math.floor(Math.random() * items.length)];
+            const { weight, price } = productData[randomItem];
+
+            // Display item details
+            $('#item_name').text(randomItem);
+            $('#item_weight').text(weight);
+            $('#item_price').text(price);
+            $('#item_details, #payment_options').show();
+
+            iziToast.success({
+                title: 'Item Scanned',
+                message: `${randomItem} added to dashboard`,
+            });
+        });
+
+        // Payment selection
+        $('#pay_cash').click(function() {
+            $('#cash_payment').show();
+        });
+
+        $('#pay_gpay').click(function() {
+            iziToast.info({
+                title: 'Payment Request',
+                message: 'Please proceed with GPay to complete the payment',
+            });
+            // Assuming GPay payment flow
+            setTimeout(() => {
+                iziToast.success({
+                    title: 'Payment Successful',
+                    message: 'Transaction completed via GPay',
+                });
+                printReceipt('GPay');
+            }, 2000);
+        });
+
+        $('#confirm_cash').click(function() {
+            const amount = $('#cash_amount').val();
+            if (amount >= $('#item_price').text()) {
+                iziToast.success({
+                    title: 'Payment Successful',
+                    message: 'Transaction completed with cash',
+                });
+                printReceipt('Cash');
+            } else {
+                iziToast.error({
+                    title: 'Insufficient Amount',
+                    message: 'Please enter the correct amount',
+                });
+            }
+        });
+
+        // Receipt printing
+        function printReceipt(paymentMethod) {
+            const item = $('#item_name').text();
+            const weight = $('#item_weight').text();
+            const price = $('#item_price').text();
+            alert(`Receipt:\nItem: ${item}\nWeight: ${weight}\nPrice: ₹${price}\nPayment Method: ${paymentMethod}`);
+        }
+    </script>
+</body>
+</html>
